@@ -2,9 +2,14 @@
 
 ## Contents
 1. [Installation](#instalation)
+    - [Using NPM](#using-npm)
+    - [Using Docker](#using-docker)
+
 
 
 ### Instalation
+
+#### Using NPM
 
 Clone repository:
 
@@ -28,4 +33,16 @@ Build:
 
 ```bash
 npm run build
+```
+
+#### Using Docker
+
+Development:
+```bash
+docker-compose --profile dev up -d app-dev
+```
+
+Production:
+```bash
+docker-compose up -d
 ```
