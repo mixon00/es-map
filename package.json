@@ -15,6 +15,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.554.0",
     "ol": "^10.7.0",
+    "ol-ext": "^4.0.36",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.4.0",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
+    "@types/ol-ext": "npm:@siedlerchr/types-ol-ext@^3.6.5",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
