@@ -1,4 +1,4 @@
-import { MapView } from '@/components/MapView';
+import { MapView } from '@/components/MapVew/MapView';
 import { Suspense } from 'react';
 import { Loader } from './Loader';
 
