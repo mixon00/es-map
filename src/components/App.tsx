@@ -1,12 +1,11 @@
 import { MapView } from '@/components/MapVew/MapView';
-import { Suspense } from 'react';
-import { Loader } from './Loader';
 
 function App() {
   return (
-    <Suspense fallback={<Loader />}>
+    <div className="flex flex-col gap-4 w-full h-full">
+      <h2 className="text-2xl font-bold text-center">ES Map</h2>
       <MapView />
-    </Suspense>
+    </div>
   );
 }
 

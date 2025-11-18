@@ -9,8 +9,13 @@ import { fromLonLat, transformExtent } from 'ol/proj';
 import { createMaskLayer } from './createMaskLayer';
 import { createVoivodeshipsLayer } from './createVoivodeshipsLayer';
 import { createLiniesLayer } from './createLiniesLayer';
+import { LayerOptions } from '@/components/LayerOptions';
+import { useOptions } from '@/stores/options.store';
 
 export const MapView = () => {
+  const showLines = useOptions((state) => state.showLines);
+  const showCharts = useOptions((state) => state.showCharts);
+
   const polandBounds = useMemo(() => [14.0, 49.0, 24.0, 55.0], []);
   const extent = useMemo(
     () => transformExtent(polandBounds, 'EPSG:4326', 'EPSG:3857'),
@@ -20,6 +25,14 @@ export const MapView = () => {
   const maskLayer = useMemo(() => createMaskLayer(), []);
   const voivodeshipsLayer = useMemo(() => createVoivodeshipsLayer(), []);
   const liniesLayer = useMemo(() => createLiniesLayer(), []);
+
+  useEffect(() => {
+    voivodeshipsLayer.setVisible(showCharts);
+  }, [showCharts, voivodeshipsLayer]);
+
+  useEffect(() => {
+    liniesLayer.setVisible(showLines);
+  }, [showLines, liniesLayer]);
 
   useEffect(() => {
     const map = new Map({
@@ -49,6 +62,7 @@ export const MapView = () => {
   return (
     <div className="w-full h-full rounded-lg overflow-hidden shadow-lg border">
       <div id="map" className="w-full h-full"></div>
+      <LayerOptions />
     </div>
   );
 };
