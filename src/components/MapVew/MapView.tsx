@@ -8,6 +8,7 @@ import OSM from 'ol/source/OSM';
 import { fromLonLat, transformExtent } from 'ol/proj';
 import { createMaskLayer } from './createMaskLayer';
 import { createVoivodeshipsLayer } from './createVoivodeshipsLayer';
+import { createLiniesLayer } from './createLiniesLayer';
 
 export const MapView = () => {
   const polandBounds = useMemo(() => [14.0, 49.0, 24.0, 55.0], []);
@@ -18,6 +19,7 @@ export const MapView = () => {
 
   const maskLayer = useMemo(() => createMaskLayer(), []);
   const voivodeshipsLayer = useMemo(() => createVoivodeshipsLayer(), []);
+  const liniesLayer = useMemo(() => createLiniesLayer(), []);
 
   useEffect(() => {
     const map = new Map({
@@ -28,10 +30,11 @@ export const MapView = () => {
         }),
         voivodeshipsLayer,
         maskLayer,
+        liniesLayer,
       ],
       view: new View({
         center: fromLonLat([19.0, 52.0]),
-        zoom: 6,
+        zoom: 1,
         extent: extent,
         constrainOnlyCenter: false,
         smoothExtentConstraint: true,
@@ -41,7 +44,7 @@ export const MapView = () => {
     return () => {
       map.dispose();
     };
-  }, [extent, maskLayer, voivodeshipsLayer]);
+  }, [extent, maskLayer, voivodeshipsLayer, liniesLayer]);
 
   return (
     <div className="w-full h-full rounded-lg overflow-hidden shadow-lg border">

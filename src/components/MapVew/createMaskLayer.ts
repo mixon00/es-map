@@ -1,10 +1,11 @@
-import VectorLayer from 'ol/layer/Vector';
+import VectorImageLayer from 'ol/layer/VectorImage';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import { Style, Fill } from 'ol/style';
 import GeoJSON from 'ol/format/GeoJSON';
 import { MultiPolygon, Polygon } from 'ol/geom';
 import { buffer as extentBuffer } from 'ol/extent';
+import { OVERLAY_COLOR } from '@/utils/mapHelpers';
 
 export function createMaskLayer() {
   const source = new VectorSource({
@@ -24,27 +25,22 @@ export function createMaskLayer() {
       if (polandGeometry && polandGeometry.getType() === 'MultiPolygon') {
         const multiPolygon = polandGeometry as MultiPolygon;
         
-        // Get Poland's extent and add ~500km buffer
         const polandExtent = polandGeometry.getExtent();
-        const bufferedExtent = extentBuffer(polandExtent, 100000); // 500km in meters
+        const bufferedExtent = extentBuffer(polandExtent, 100000);
 
-        // Create outer rectangle
         const outerRing = [
-          [bufferedExtent[0], bufferedExtent[1]], // bottom-left
-          [bufferedExtent[2], bufferedExtent[1]], // bottom-right
-          [bufferedExtent[2], bufferedExtent[3]], // top-right
-          [bufferedExtent[0], bufferedExtent[3]], // top-left
-          [bufferedExtent[0], bufferedExtent[1]], // close
+          [bufferedExtent[0], bufferedExtent[1]],
+          [bufferedExtent[2], bufferedExtent[1]],
+          [bufferedExtent[2], bufferedExtent[3]],
+          [bufferedExtent[0], bufferedExtent[3]],
+          [bufferedExtent[0], bufferedExtent[1]],
         ];
 
-        // Get Poland coordinates as inner ring (hole)
-        const polandCoords = multiPolygon.getCoordinates()[0]; // First polygon
-        const innerRing = polandCoords[0]; // First ring of the polygon
+        const polandCoords = multiPolygon.getCoordinates()[0];
+        const innerRing = polandCoords[0];
 
-        // Create polygon with hole: outer ring + inner ring (Poland as hole)
         const maskPolygon = new Polygon([outerRing, innerRing]);
 
-        // Replace the source with the mask feature
         source.clear();
         source.addFeature(
           new Feature({
@@ -55,16 +51,14 @@ export function createMaskLayer() {
     }
   });
 
-  return new VectorLayer({
+  return new VectorImageLayer({
     source: source,
     style: new Style({
       fill: new Fill({
-        color: 'rgba(255, 255, 255, 0.8)', // Semi-transparent white
+        color: OVERLAY_COLOR,
       }),
     }),
     zIndex: 1000,
-    updateWhileAnimating: false,
-    updateWhileInteracting: false,
     renderBuffer: 500,
     declutter: false,
   });

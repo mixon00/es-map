@@ -1,10 +1,10 @@
-import VectorLayer from 'ol/layer/Vector';
+import VectorImageLayer from 'ol/layer/VectorImage';
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import { createVoivodeshipsStyle } from './createVoivodeshipsStyle';
 
 export function createVoivodeshipsLayer() {
-  const layer = new VectorLayer({
+  const layer = new VectorImageLayer({
     source: new VectorSource({
       url: '/data/wojewodztwa.geojson',
       format: new GeoJSON(),

@@ -3,7 +3,24 @@ import { getCenter } from 'ol/extent';
 import type { FeatureLike } from 'ol/Feature';
 import { fromLonLat } from 'ol/proj';
 
-export const CHART_COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728'];
+export const CHART_COLORS = [
+  'rgba(31, 119, 180, 1)',
+  'rgba(255, 127, 14, 1)',
+  'rgba(44, 160, 44, 1)',
+  'rgba(214, 39, 40, 1)',
+];
+
+export const ROAD_COLORS = [
+  'rgba(255, 255, 0, 1)',
+  'rgba(255, 136, 0, 1)',
+  'rgba(136, 136, 136, 1)',
+];
+
+export const OVERLAY_COLOR = 'rgba(255, 255, 255, 1)';
+
+export const STROKE_COLOR = 'rgba(255, 255, 255, 1)';
+
+export const VOIVODESHIPS_COLORS = ['rgba(16, 103, 225, 0.1)', 'rgba(16, 103, 225, 0.5)'];
 
 export const DATA_KEYS = ['dane1', 'dane2', 'dane3', 'dane4'] as const;
 

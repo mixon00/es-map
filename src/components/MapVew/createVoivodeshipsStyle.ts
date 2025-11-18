@@ -1,7 +1,7 @@
 import { Style, Fill, Stroke, Text } from 'ol/style';
 import StyleChart from 'ol-ext/style/Chart';
 import type { FeatureLike } from 'ol/Feature';
-import { CHART_COLORS, DATA_KEYS, getFeatureCentroid } from '@/utils/mapHelpers';
+import { CHART_COLORS, DATA_KEYS, getFeatureCentroid, STROKE_COLOR, VOIVODESHIPS_COLORS } from '@/utils/mapHelpers';
 
 const TEXT_OFFSETS = [-30, -10, 10, 30];
 
@@ -11,17 +11,16 @@ export function createVoivodeshipsStyle(feature: FeatureLike): Style[] {
   const data = DATA_KEYS.map(key => properties[key] || 0);
 
   const styles: Style[] = [
-    // Polygon borders
     new Style({
       fill: new Fill({
-        color: 'rgba(16, 103, 225, 0.1)',
+        color: VOIVODESHIPS_COLORS[0],
       }),
       stroke: new Stroke({
-        color: 'rgba(16, 103, 225, 0.5)',
+        color: VOIVODESHIPS_COLORS[1],
         width: 2,
       }),
     }),
-    // Chart at centroid
+
     new Style({
       geometry: getFeatureCentroid,
       image: new StyleChart({
@@ -30,14 +29,13 @@ export function createVoivodeshipsStyle(feature: FeatureLike): Style[] {
         data,
         colors: CHART_COLORS,
         stroke: new Stroke({
-          color: '#fff',
+          color: STROKE_COLOR,
           width: 2,
         }),
       }),
     }),
   ];
 
-  // Add text labels for each data point
   DATA_KEYS.forEach((key, index) => {
     styles.push(
       new Style({
@@ -51,7 +49,7 @@ export function createVoivodeshipsStyle(feature: FeatureLike): Style[] {
             color: CHART_COLORS[index],
           }),
           stroke: new Stroke({
-            color: '#fff',
+            color: STROKE_COLOR,
             width: 2,
           }),
         }),
